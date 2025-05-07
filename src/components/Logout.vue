@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleLogout" class="d-flex align-items-center gap-2">
-    <input type="text" readonly v-model="refreshToken" hidden />
+    <input type="text" readonly hidden />
     <button type="submit" class="btn btn-danger">Logout</button>
   </form>
 </template>

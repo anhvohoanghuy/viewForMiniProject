@@ -8,7 +8,10 @@
             <label for="username" class="form-label">Username</label>
             <input type="text" id="username" class="form-control" v-model="username" required />
           </div>
-
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" v-model="email" required />
+          </div>
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" id="password" class="form-control" v-model="password" required />
@@ -41,6 +44,7 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 const router = useRouter()
 const username = ref('')
+const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const errorMessage = ref('')
@@ -53,6 +57,7 @@ const handleSubmit = async () => {
   try {
     const response = await axios.post('http://localhost:8080/api/auth/register', {
       username: username.value,
+      email: email.value,
       password: password.value,
       confirmPassword: confirmPassword.value,
     })

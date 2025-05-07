@@ -46,8 +46,12 @@ onUnmounted(() => {})
             <RouterLink class="btn btn-outline-primary me-2" to="/register">Register</RouterLink>
             <RouterLink class="btn btn-outline-primary me-2" to="/login">Login</RouterLink>
           </div>
-
-          <Logout @logout="checkLogin" v-else />
+          <div class="d-flex" v-else>
+            <RouterLink class="btn btn-outline-primary me-2" to="/password"
+              >Change password</RouterLink
+            >
+            <Logout @logout="checkLogin" />
+          </div>
         </div>
       </div>
     </div>

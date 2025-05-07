@@ -92,6 +92,13 @@ const selectedStatus = ref('')
 const selectedPriority = ref('')
 const selectedStartDate = ref('')
 const selectedEndDate = ref('')
+const resetFilters = () => {
+  searchQuery.value = ''
+  selectedStatus.value = ''
+  selectedPriority.value = ''
+  selectedStartDate.value = ''
+  selectedEndDate.value = ''
+}
 const filterItems = () => {
   const result = props.items.filter((item) => {
     const matchesQuery = item.title.toLowerCase().includes(searchQuery.value.toLowerCase())

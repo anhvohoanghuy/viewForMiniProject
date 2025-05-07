@@ -5,6 +5,7 @@ import EditTask from '@/components/EditTask.vue'
 import CreateTask from '@/components/CreateTask.vue'
 import DeleteTask from '@/components/DeleteTask.vue'
 import Register from '@/components/Register.vue'
+import ChangePassword from '@/components/ChangePassword.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -41,6 +42,11 @@ const router = createRouter({
       path: '/register/',
       name: 'Register',
       component: Register,
+    },
+    {
+      path: '/password/',
+      name: 'change-password',
+      component: ChangePassword,
     },
   ],
 })
