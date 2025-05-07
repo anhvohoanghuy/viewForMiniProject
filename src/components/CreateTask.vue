@@ -27,7 +27,7 @@
         <input type="datetime-local" id="endDate" v-model="endDate" class="form-control" required />
       </div>
 
-      <p v-if="checkDate" class="card-text mb-2">
+      <p v-if="!checkDate" class="card-text mb-2">
         <small class="text-danger"> ngày tháng không hợp lệ </small>
       </p>
 
@@ -59,20 +59,21 @@
 import { ref, computed } from 'vue'
 import axiosInstance from '@/services/axiosInstance'
 import { useRouter } from 'vue-router'
-const currentDateTime = new Date().toISOString().slice(0, 16) // "yyyy-mm-ddTHH:mm"
+const currentDateTime = new Date(Date.now() + 7 * 60 * 60 * 1000) // UTC+7
 const router = useRouter()
 const title = ref('')
 const description = ref('')
-const startDate = ref(currentDateTime)
-const endDate = ref(currentDateTime)
+const startDate = ref(currentDateTime.toISOString().slice(0, 16))
+const endDate = ref(currentDateTime.toISOString().slice(0, 16))
 const status = ref(1)
 const priority = ref(1)
+
 const checkDate = computed(() => {
-  const currentDateTime = new Date().toISOString().slice(0, 16) // "yyyy-mm-ddTHH:mm"
+  const currentDateTime = new Date()
+  const startDateTime = new Date(startDate.value)
+  const endDateTime = new Date(endDate.value)
   return (
-    startDate.value < currentDateTime ||
-    endDate.value < currentDateTime ||
-    startDate.value > endDate.value
+    startDateTime > currentDateTime || endDateTime > currentDateTime || startDateTime < endDateTime
   )
 })
 const add = async () => {

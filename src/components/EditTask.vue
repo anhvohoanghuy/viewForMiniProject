@@ -27,7 +27,7 @@
       <label for="endDate" class="form-label">End Date:</label>
       <input type="datetime-local" id="endDate" v-model="endDate" class="form-control" required />
     </div>
-    <p v-if="checkDate" class="card-text mb-2">
+    <p v-if="!checkDate" class="card-text mb-2">
       <small class="text-danger"> ngày tháng không hợp lệ </small>
     </p>
     <div class="mb-3">
@@ -73,7 +73,6 @@ const status = ref(0)
 const priority = ref(0)
 onMounted(async () => {
   const response = await axiosInstance.get(`task/${props.id}`)
-
   const data = response.data
   title.value = data.title
   description.value = data.description
@@ -83,12 +82,10 @@ onMounted(async () => {
   priority.value = data.priority
 })
 const checkDate = computed(() => {
-  const currentDateTime = new Date().toISOString().slice(0, 16) // "yyyy-mm-ddTHH:mm"
-  return (
-    startDate.value < currentDateTime ||
-    endDate.value < currentDateTime ||
-    startDate.value > endDate.value
-  )
+  const currentDateTime = new Date()
+  const startDateTime = new Date(startDate.value)
+  const endDateTime = new Date(endDate.value)
+  return startDateTime < endDateTime
 })
 const update = async () => {
   if (!checkDate.value) {

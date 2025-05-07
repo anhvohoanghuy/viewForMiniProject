@@ -42,9 +42,11 @@ onUnmounted(() => {})
         </ul>
         <!-- login,logout -->
         <div class="d-flex">
-          <RouterLink v-if="!isLoggedIn" class="btn btn-outline-primary me-2" to="/login"
-            >Login</RouterLink
-          >
+          <div v-if="!isLoggedIn" class="d-flex">
+            <RouterLink class="btn btn-outline-primary me-2" to="/register">Register</RouterLink>
+            <RouterLink class="btn btn-outline-primary me-2" to="/login">Login</RouterLink>
+          </div>
+
           <Logout @logout="checkLogin" v-else />
         </div>
       </div>

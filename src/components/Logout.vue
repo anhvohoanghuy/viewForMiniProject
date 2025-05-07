@@ -8,24 +8,24 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axiosInstance from '../services/axiosInstance.js'
+import axios from 'axios'
 const router = useRouter()
-const refreshToken = localStorage.getItem('refreshToken')
 const emit = defineEmits(['logout'])
 const handleLogout = async () => {
   try {
-    await axiosInstance.post('auth/logout', {
-      refreshToken: refreshToken,
+    await axios.post('http://localhost:8080/api/auth/logout', {
+      refreshToken: localStorage.getItem('refreshToken'),
       accessToken: localStorage.getItem('accessToken'),
       userId: localStorage.getItem('userId'),
     })
+  } catch (error) {
+    console.log('Logout error:', error)
+  } finally {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('userId')
     emit('logout')
     router.push('/login')
-  } catch (error) {
-    console.log('Logout error:', error)
   }
 }
 </script>
