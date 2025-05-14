@@ -85,4 +85,51 @@ axiosInstance.interceptors.response.use(
     }
   },
 )
+const logout = async () => {
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('userId')
+  window.location.href = '/login'
+  const response = await axios.post('http://localhost:8080/api/auth/logout', {
+    refreshToken: localStorage.getItem('refreshToken'),
+    accessToken: localStorage.getItem('accessToken'),
+    userId: localStorage.getItem('userId'),
+  })
+  if (response.status === 200) {
+    console.log('Logout successful')
+  } else {
+    console.error('Logout failed')
+  }
+}
+const getTaskByUserId = async (userId) => {
+  try {
+    const response = await axiosInstance.get(`/tasks/${userId}`)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching tasks:', error)
+    throw error
+  }
+}
+const register = async (user) => {
+  try {
+    const response = await axiosInstance.post('/auth/register', user)
+    return response.data
+  } catch (error) {
+    console.error('Error registering user:', error)
+    throw error
+  }
+}
+const login = async (user) => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/auth/login', user)
+    const { accessToken, refreshToken, userId } = response.data
+    localStorage.setItem('accessToken', accessToken)
+    localStorage.setItem('refreshToken', refreshToken)
+    localStorage.setItem('userId', userId)
+    return response.data
+  } catch (error) {
+    console.error('Error logging in:', error)
+    throw error
+  }
+}
 export default axiosInstance
