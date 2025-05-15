@@ -23,7 +23,7 @@
               type="password"
               id="confirmPassword"
               class="form-control"
-              v-model="confirmPassword"
+              v-model="comfirmPassword"
               required
             />
           </div>
@@ -46,7 +46,7 @@ const router = useRouter()
 const username = ref('')
 const email = ref('')
 const password = ref('')
-const confirmPassword = ref('')
+const comfirmPassword = ref('')
 const errorMessage = ref('')
 const handleSubmit = async () => {
   if (password.value !== confirmPassword.value) {
@@ -59,7 +59,7 @@ const handleSubmit = async () => {
       username: username.value,
       email: email.value,
       password: password.value,
-      confirmPassword: confirmPassword.value,
+      comfirmPassword: comfirmPassword.value,
     })
 
     if (response.status === 200) {
