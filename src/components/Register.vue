@@ -23,7 +23,7 @@
               type="password"
               id="confirmPassword"
               class="form-control"
-              v-model="comfirmPassword"
+              v-model="confirmPassword"
               required
             />
           </div>
@@ -46,29 +46,31 @@ const router = useRouter()
 const username = ref('')
 const email = ref('')
 const password = ref('')
-const comfirmPassword = ref('')
+const confirmPassword = ref('')
 const errorMessage = ref('')
 const handleSubmit = async () => {
   if (password.value !== confirmPassword.value) {
     errorMessage.value = 'Mật khẩu không khớp!'
     return
   }
-
-  try {
-    const response = await axios.post('http://localhost:8080/api/auth/register', {
+  await axios
+    .post('http://localhost:8080/api/auth/register', {
       username: username.value,
       email: email.value,
       password: password.value,
-      comfirmPassword: comfirmPassword.value,
+      comfirmPassword: confirmPassword.value,
     })
-
-    if (response.status === 200) {
+    .then((response) => {
+      console.log(response)
       router.push('/login')
-    } else {
-      errorMessage.value = 'Đăng ký thất bại!'
-    }
-  } catch (error) {
-    errorMessage.value = 'Đã xảy ra lỗi trong quá trình đăng ký!'
-  }
+    })
+    .catch((error) => {
+      console.error(error)
+      if (error.response && error.response.status === 400) {
+        errorMessage.value = error.response.data || 'Đã xảy ra lỗi trong quá trình đăng ký!'
+      } else {
+        errorMessage.value = 'Đã xảy ra lỗi trong quá trình đăng ký!'
+      }
+    })
 }
 </script>

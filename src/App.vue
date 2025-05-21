@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import Logout from './components/Logout.vue'
 import { onMounted, onUnmounted, ref } from 'vue'
+import axiosInstance from './services/axiosInstance'
 const isLoggedIn = ref(false)
 const checkLogin = () => {
   isLoggedIn.value = !!localStorage.getItem('accessToken')
@@ -9,7 +10,7 @@ const checkLogin = () => {
 onMounted(() => {
   checkLogin()
 })
-
+const isAdmin = ref(false)
 onUnmounted(() => {})
 </script>
 
@@ -38,6 +39,9 @@ onUnmounted(() => {})
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/task">Task</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/chat">Chat</RouterLink>
           </li>
         </ul>
         <!-- login,logout -->
